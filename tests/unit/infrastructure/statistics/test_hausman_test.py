@@ -255,3 +255,38 @@ def test_hausman_test_fails_when_covariance_difference_is_singular() -> None:
             re_covariance=re_covariance,
             alpha=0.05,
         )
+
+
+def test_hausman_test_decision_depends_on_alpha() -> None:
+    fe_coefficients = Coefficients(
+        values=(1.2, 0.8),
+    )
+
+    re_coefficients = Coefficients(
+        values=(1.0, 0.5),
+    )
+
+    fe_covariance = CovarianceMatrix(
+        values=(
+            (0.5, 0.0),
+            (0.0, 0.5),
+        ),
+    )
+
+    re_covariance = CovarianceMatrix(
+        values=(
+            (0.3, 0.0),
+            (0.0, 0.3),
+        ),
+    )
+
+    result = HausmanTest().calculate(
+        fe_coefficients=fe_coefficients,
+        re_coefficients=re_coefficients,
+        fe_covariance=fe_covariance,
+        re_covariance=re_covariance,
+        alpha=0.8,
+    )
+
+    assert result.p_value == pytest.approx(0.7225273536)
+    assert result.decision is HausmanDecision.REJECT_H0
