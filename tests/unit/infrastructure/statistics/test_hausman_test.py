@@ -3,7 +3,7 @@ import pytest
 from domain.value_objects.coefficients import Coefficients
 from domain.value_objects.covariance_matrix import CovarianceMatrix
 from domain.value_objects.hausman_result import HausmanDecision
-from infrastructure.statistics.hausman_test import HausmanTest
+from infrastructure.statistics.hausman import HausmanTest
 
 from infrastructure.statistics.exceptions import CovarianceMatrixNotInvertible
 
