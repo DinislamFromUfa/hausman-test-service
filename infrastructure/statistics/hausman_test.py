@@ -1,6 +1,7 @@
 from scipy.stats import chi2
 import numpy as np
 
+from domain.ports.hausman_calculator import HausmanCalculatorPort
 from domain.value_objects.coefficients import Coefficients
 from domain.value_objects.covariance_matrix import CovarianceMatrix
 from domain.value_objects.hausman_result import HausmanDecision, HausmanResult
@@ -8,7 +9,7 @@ from domain.value_objects.hausman_result import HausmanDecision, HausmanResult
 from infrastructure.statistics.exceptions import CovarianceMatrixNotInvertible
 
 
-class HausmanTest:
+class HausmanTest(HausmanCalculatorPort):
     def __init__(self, alpha: float) -> None:
         if not 0 < alpha < 1:
             raise ValueError("Alpha must be between 0 and 1")
