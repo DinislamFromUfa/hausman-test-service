@@ -14,6 +14,7 @@ class HausmanInteractor:
             re_coefficients=request.re_coefficients,
             fe_covariance=request.fe_covariance,
             re_covariance=request.re_covariance,
+            alpha=request.alpha,
         )
 
         return HausmanResponse(

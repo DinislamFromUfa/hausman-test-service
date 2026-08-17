@@ -31,11 +31,12 @@ def test_hausman_test_calculates_result() -> None:
         ),
     )
 
-    result = HausmanTest(alpha=0.05).calculate(
+    result = HausmanTest().calculate(
         fe_coefficients=fe_coefficients,
         re_coefficients=re_coefficients,
         fe_covariance=fe_covariance,
         re_covariance=re_covariance,
+        alpha=0.05,
     )
 
     assert result.statistic == pytest.approx(0.65)
@@ -53,7 +54,27 @@ def test_alpha_must_be_between_zero_and_one(alpha: float) -> None:
         ValueError,
         match="Alpha must be between 0 and 1",
     ):
-        HausmanTest(alpha=alpha)
+        HausmanTest().calculate(
+            fe_coefficients=Coefficients(
+                values=(1.2, 0.8),
+            ),
+            re_coefficients=Coefficients(
+                values=(1.0, 0.5),
+            ),
+            fe_covariance=CovarianceMatrix(
+                values=(
+                    (0.5, 0.0),
+                    (0.0, 0.5),
+                ),
+            ),
+            re_covariance=CovarianceMatrix(
+                values=(
+                    (0.3, 0.0),
+                    (0.0, 0.3),
+                ),
+            ),
+            alpha=alpha,
+        )
 
 
 def test_coefficients_must_have_same_dimension() -> None:
@@ -83,11 +104,12 @@ def test_coefficients_must_have_same_dimension() -> None:
         ValueError,
         match="FE and RE coefficients must have the same dimension",
     ):
-        HausmanTest(alpha=0.05).calculate(
+        HausmanTest().calculate(
             fe_coefficients=fe_coefficients,
             re_coefficients=re_coefficients,
             fe_covariance=fe_covariance,
             re_covariance=re_covariance,
+            alpha=0.05,
         )
 
 
@@ -119,11 +141,12 @@ def test_fe_covariance_dimension_must_match_coefficients() -> None:
         ValueError,
         match="FE covariance matrix dimension must match coefficients",
     ):
-        HausmanTest(alpha=0.05).calculate(
+        HausmanTest().calculate(
             fe_coefficients=fe_coefficients,
             re_coefficients=re_coefficients,
             fe_covariance=fe_covariance,
             re_covariance=re_covariance,
+            alpha=0.05,
         )
 
 
@@ -150,11 +173,12 @@ def test_hausman_test_rejects_h0_when_p_value_is_small() -> None:
         ),
     )
 
-    result = HausmanTest(alpha=0.05).calculate(
+    result = HausmanTest().calculate(
         fe_coefficients=fe_coefficients,
         re_coefficients=re_coefficients,
         fe_covariance=fe_covariance,
         re_covariance=re_covariance,
+        alpha=0.05,
     )
 
     assert result.p_value < 0.05
@@ -189,11 +213,12 @@ def test_re_covariance_dimension_must_match_coefficients() -> None:
         ValueError,
         match="RE covariance matrix dimension must match coefficients",
     ):
-        HausmanTest(alpha=0.05).calculate(
+        HausmanTest().calculate(
             fe_coefficients=fe_coefficients,
             re_coefficients=re_coefficients,
             fe_covariance=fe_covariance,
             re_covariance=re_covariance,
+            alpha=0.05,
         )
 
 
@@ -223,9 +248,10 @@ def test_hausman_test_fails_when_covariance_difference_is_singular() -> None:
     with pytest.raises(
         CovarianceMatrixNotInvertible,
     ):
-        HausmanTest(alpha=0.05).calculate(
+        HausmanTest().calculate(
             fe_coefficients=fe_coefficients,
             re_coefficients=re_coefficients,
             fe_covariance=fe_covariance,
             re_covariance=re_covariance,
+            alpha=0.05,
         )

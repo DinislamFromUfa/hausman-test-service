@@ -13,5 +13,6 @@ class HausmanCalculatorPort(ABC):
         re_coefficients: Coefficients,
         fe_covariance: CovarianceMatrix,
         re_covariance: CovarianceMatrix,
+        alpha: float,
     ) -> HausmanResult:
         pass

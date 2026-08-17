@@ -10,19 +10,17 @@ from infrastructure.statistics.exceptions import CovarianceMatrixNotInvertible
 
 
 class HausmanTest(HausmanCalculatorPort):
-    def __init__(self, alpha: float) -> None:
-        if not 0 < alpha < 1:
-            raise ValueError("Alpha must be between 0 and 1")
-
-        self._alpha = alpha
-
     def calculate(
         self,
         fe_coefficients: Coefficients,
         re_coefficients: Coefficients,
         fe_covariance: CovarianceMatrix,
         re_covariance: CovarianceMatrix,
+        alpha: float,
     ) -> HausmanResult:
+        if not 0 < alpha < 1:
+            raise ValueError("Alpha must be between 0 and 1")
+
         self._validate_dimensions(
             fe_coefficients,
             re_coefficients,
@@ -63,7 +61,7 @@ class HausmanTest(HausmanCalculatorPort):
 
         decision = (
             HausmanDecision.REJECT_H0
-            if p_value <= self._alpha
+            if p_value <= alpha
             else HausmanDecision.DO_NOT_REJECT_H0
         )
 

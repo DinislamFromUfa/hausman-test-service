@@ -16,6 +16,7 @@ class FakeHausmanCalculator:
         re_coefficients: Coefficients,
         fe_covariance: CovarianceMatrix,
         re_covariance: CovarianceMatrix,
+        alpha: float,
     ) -> HausmanResult:
         self.called_with = {
             "fe_coefficients": fe_coefficients,
