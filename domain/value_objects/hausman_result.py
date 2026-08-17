@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from math import isfinite
 
 
 class HausmanDecision(Enum):
@@ -15,11 +16,27 @@ class HausmanResult:
     decision: HausmanDecision
 
     def __post_init__(self) -> None:
+        if not isfinite(self.statistic):
+            raise ValueError(
+                "Hausman statistic must be finite"
+            )
+
         if self.statistic < 0:
-            raise ValueError("Hausman statistic cannot be negative")
+            raise ValueError(
+                "Hausman statistic cannot be negative"
+            )
+
+        if not isfinite(self.p_value):
+            raise ValueError(
+                "p-value must be finite"
+            )
 
         if not 0 <= self.p_value <= 1:
-            raise ValueError("p-value must be between 0 and 1")
+            raise ValueError(
+                "p-value must be between 0 and 1"
+            )
 
         if self.degrees_of_freedom <= 0:
-            raise ValueError("Degrees of freedom must be positive")
+            raise ValueError(
+                "Degrees of freedom must be positive"
+            )

@@ -106,3 +106,41 @@ def test_hausman_result_is_immutable() -> None:
 
     with pytest.raises(AttributeError):
         result.p_value = 0.9
+
+
+@pytest.mark.parametrize(
+    "statistic",
+    [float("nan"), float("inf"), float("-inf")],
+)
+def test_hausman_statistic_must_be_finite(
+    statistic: float,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match="Hausman statistic must be finite",
+    ):
+        HausmanResult(
+            statistic=statistic,
+            p_value=0.05,
+            degrees_of_freedom=3,
+            decision=HausmanDecision.DO_NOT_REJECT_H0,
+        )
+
+
+@pytest.mark.parametrize(
+    "p_value",
+    [float("nan"), float("inf"), float("-inf")],
+)
+def test_p_value_must_be_finite(
+    p_value: float,
+) -> None:
+    with pytest.raises(
+        ValueError,
+        match="p-value must be finite",
+    ):
+        HausmanResult(
+            statistic=10.0,
+            p_value=p_value,
+            degrees_of_freedom=3,
+            decision=HausmanDecision.DO_NOT_REJECT_H0,
+        )
