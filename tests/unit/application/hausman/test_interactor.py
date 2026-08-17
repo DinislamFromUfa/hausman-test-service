@@ -23,6 +23,7 @@ class FakeHausmanCalculator:
             "re_coefficients": re_coefficients,
             "fe_covariance": fe_covariance,
             "re_covariance": re_covariance,
+            "alpha": alpha,
         }
         return self.result
 
@@ -89,4 +90,5 @@ def test_execute_passes_request_data_to_calculator():
         "re_coefficients": request.re_coefficients,
         "fe_covariance": request.fe_covariance,
         "re_covariance": request.re_covariance,
+        "alpha": request.alpha,
     }
