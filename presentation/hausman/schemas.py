@@ -2,10 +2,10 @@ from pydantic import BaseModel, Field
 
 
 class HausmanRequestSchema(BaseModel):
-    fe_coefficients: list[float]
-    re_coefficients: list[float]
-    fe_covariance: list[list[float]]
-    re_covariance: list[list[float]]
+    fe_coefficients: list[float] = Field(min_length=1)
+    re_coefficients: list[float] = Field(min_length=1)
+    fe_covariance: list[list[float]] = Field(min_length=1)
+    re_covariance: list[list[float]] = Field(min_length=1)
     alpha: float = Field(gt=0, lt=1)
 
 
