@@ -1,0 +1,23 @@
+[project]
+name = "hausman-test-service"
+version = "0.1.0"
+description = "Web service for the Hausman test"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "dishka>=1.7.0",
+    "fastapi>=0.116.0",
+    "numpy>=2.3.0",
+    "pydantic>=2.11.0",
+    "scipy>=1.16.0",
+    "uvicorn[standard]>=0.35.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx2>=2.10.0",
+    "pytest>=8.4.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
